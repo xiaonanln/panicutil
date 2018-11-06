@@ -3,11 +3,14 @@ package panicutil
 import (
 	"context"
 	"log"
+	"runtime/debug"
 )
 
 func RecoverPanic(f func()) (err interface{}) {
 	defer func() {
 		err = recover()
+		debug.PrintStack()
+		log.Printf("panic: %v", err)
 	}()
 
 	f()
