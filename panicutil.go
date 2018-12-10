@@ -9,8 +9,10 @@ import (
 func RecoverPanic(f func()) (err interface{}) {
 	defer func() {
 		err = recover()
-		debug.PrintStack()
-		log.Printf("panic: %v", err)
+		if err != nil {
+			debug.PrintStack()
+			log.Printf("panic: %v", err)
+		}
 	}()
 
 	f()
